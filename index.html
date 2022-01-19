@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shooting Game in Virtual Reality</title>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="Shoot.js"></script>
+    <script src="gameObject.js"></script>
+    <script src="./playerMovement.js"></script>
+    
+  </head>
+  <body>
+    <a-scene id="scene">
+
+      <!--Assets-->
+      <a-assets>
+        <a-asset-item id="shooter" src="./models/shooter/gun.gltf"></a-asset-item>
+        <a-asset-item id="collider" src="./models/navmesh.gltf"></a-asset-item>
+        <audio id="shoot" src="./sounds/shoot.mp3"></audio>
+        <audio id="footstep" src="./sounds/footstep.mp3"></audio>
+      </a-assets>
+
+      <a-entity id="environment" environment="preset:egypt;skyType:gradient;lighting:point;"></a-entity>
+
+      <a-entity id="sound1" sound="src:#shoot;autoplay:false;poolSize:2;volume:1;loop:false"></a-entity>
+      <a-entity id="sound2" sound="src:#footstep;autoplay:false;poolSize:2;volume:4;loop:false"></a-entity>
+      
+     <!--Light-->
+     <a-entity light="type: ambient; color: white; intensity:0.5"></a-entity>
+     <a-entity light="type: directional; color: #EEE; intensity: 1" position="-1 1 0"></a-entity>
+ 
+     <a-entity id="camera-rig" movement-controls="speed: 0.2; constrainToNavMesh: true" position="0 1 2">
+       <!-- Camera and Cursor -->
+       <a-entity id="camera" camera position="0 1.6 0" look-controls="pointerLockEnabled: false">
+         <a-entity id="weapon" gltf-model="#shooter" position="0.2 -4.6 3.1" rotation="0 180 0" scale="0.35 1 1"
+           player-movement>
+         </a-entity>
+         <a-cursor></a-cursor>
+       </a-entity>
+     </a-entity>
+
+      <!--Bullets-->
+      <a-entity bullets></a-entity>
+
+<a-entity wire-fence boxes></a-entity>
+
+      <!--Ground-->
+      <a-plane
+        id="ground"
+        repeat="5 5"
+        position="0 1 0"
+        rotation="-90 0 0"
+        height="200"
+        width="200"
+        color="#ae1300"
+        static-body
+        visible="true"
+      >
+      </a-plane>
+
+      <a-entity id="navigation-mesh" gltf-model="#collider" visible="false" nav-mesh> </a-entity>
+
+      <!-- Boxes
+      <a-box position="-3 1.5 -10" color="#018bed" depth="1" height="1" width="1" static-body></a-box>
+      <a-box position="-1 1.5 -10" color="#018bed" depth="1" height="1" width="1" static-body></a-box>
+      <a-box position="1 1.5 -10" color="#018bed" depth="1" height="1" width="1" static-body></a-box>
+      <a-box position="3 1.5 -10" color="#018bed" depth="1" height="1" width="1" static-body></a-box>
+
+    <a-box position="-2 2.5 -10" color="#dad725" depth="1" height="1" width="1" static-body></a-box>
+    <a-box position="0 2.5 -10" color="#dad725" depth="1" height="1" width="1" static-body></a-box>
+    <a-box position="2 2.5 -10" color="#dad725" depth="1" height="1" width="1" static-body></a-box>
+    <a-box position="-1 3.5 -10" color="#ef237c" depth="1" height="1" width="1" static-body></a-box>
+    <a-box position="1 3.5 -10" color="#ef237c" depth="1" height="1" width="1" static-body></a-box>
+    <a-box position="0 4.5 -10" color="#30eaf2" depth="1" height="1" width="1" static-body></a-box> -->
+
+    <!--gun-->
+    <a-entity id="weapon" gltf-model="#shooter" position="0 1 3" rotation="0 180 0" scale="0.1 0.1 0.1"></a-entity>
+    </a-scene>
+  </body>
+</html>
